@@ -39,90 +39,8 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Contact form handling
-const contactForm = document.getElementById('contactForm');
-
-contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = new FormData(contactForm);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const service = formData.get('service');
-    const message = formData.get('message');
-    
-    // Create WhatsApp message
-    const whatsappMessage = `Hello! I'm interested in Eduzone services.
-    
-Name: ${name}
-Email: ${email}
-Service: ${service}
-Message: ${message}
-
-Please get back to me. Thank you!`;
-    
-    // Encode the message for URL
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    
-    // Create WhatsApp URL (you can replace this with your WhatsApp number)
-    const whatsappURL = `https://wa.me/?text=${encodedMessage}`;
-    
-    // Open WhatsApp
-    window.open(whatsappURL, '_blank');
-    
-    // Show success message
-    showNotification('Message prepared! Please send it via WhatsApp.', 'success');
-    
-    // Reset form
-    contactForm.reset();
-});
-
-// Notification function
-function showNotification(message, type = 'info') {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
-    
-    // Style the notification
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? '#10b981' : '#3b82f6'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        z-index: 1001;
-        transform: translateX(400px);
-        transition: transform 0.3s ease;
-        max-width: 300px;
-        font-weight: 500;
-    `;
-    
-    // Add to page
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Remove after 5 seconds
-    setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 5000);
-}
-
 // Intersection Observer for animations
-const observeElements = document.querySelectorAll('.service-item, .team-member, .about-content, .contact-content');
+const observeElements = document.querySelectorAll('.service-item, .about-content, .contact-content');
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -150,7 +68,7 @@ function animateCounter(element, target) {
             current = target;
             clearInterval(timer);
         }
-        element.textContent = Math.floor(current) + (target >= 1000 ? '+' : '');
+        element.textContent = Math.floor(current) + '+' ;
     }, 20);
 }
 
